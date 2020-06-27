@@ -41,6 +41,8 @@ export class DetailComponent implements OnInit {
     }
   ];
 
+  experienceList = [1, 2];
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {

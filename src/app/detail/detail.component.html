@@ -30,20 +30,28 @@
             </div>
         </mat-card>
 
-        <mat-card class="experience-card">
+        <mat-card class="experience-card mg-top-16">
             <h2>Experiências profissionais</h2>
 
-            <mat-card></mat-card>
-            <mat-card></mat-card>
+            <mat-card class="experience mg-top-16" *ngFor="let item of experienceList">
+                <div class="experience-pic">
+                    <img src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+                </div>
+                <div class="experience-description mg-top-16">
+                    <div class="title">Desenvolvedor Sênior</div>
+                    <div class="subtitle">Atividades:</div>
+                    <div class="subtitle">Tecnologias:</div>
+                </div>
+            </mat-card>
 
-            <div class="chip-div">
+            <div class="chip-div mg-top-16">
                 <mat-chip-list aria-label="Seleção de filtro">
                     <mat-chip *ngFor="let item of experienceChips">{{item}}</mat-chip>
                 </mat-chip-list>
             </div>
 
-            <div class="contact">
-                <div *ngFor="let item of contactList">
+            <div class="contact mg-top-16">
+                <div *ngFor="let item of contactList" class="mg-top-16">
                     <i class="fa fa-{{item.icon}}" aria-hidden="true"></i>
                     <span>{{item.text}}</span>
                 </div>
