@@ -1,0 +1,59 @@
+<div class="bg">
+  <app-header></app-header>
+
+  <div class="container">
+    <div class="row form-margin">
+      <div class="col-sm-9">
+        <form>
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Filtrar" aria-label="Number" matInput [formControl]="myControl"
+              [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+      </div>
+
+      <div class="col-sm-3 plus-btn">
+        <button mat-raised-button color="primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <span>Novo</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="chip-div">
+      <mat-chip-list aria-label="Seleção de filtro">
+        <mat-chip>Nome</mat-chip>
+        <mat-chip>Cargo</mat-chip>
+        <mat-chip>Competências</mat-chip>
+        <mat-chip>Time</mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div class="list">
+      <div class="col-sm-4" *ngFor="let item of list">
+        <mat-card class="example-card list-card" matRipple>
+          <mat-card-header>
+            <img mat-card-avatar src={{item.picture}} class="example-header-image">
+            <mat-card-title>{{item.name}}</mat-card-title>
+            <mat-card-subtitle>{{item.charge}}</mat-card-subtitle>
+            <mat-card-subtitle>
+              <i class="{{item.icon}}" aria-hidden="true"></i>
+              <span>{{item.team}}</span>
+            </mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="fx jc-c show-more">
+      <button mat-fab color="primary" matTooltip="Mostrar mais" aria-label="Mostrar mais">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

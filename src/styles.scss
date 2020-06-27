@@ -1,0 +1,78 @@
+.fx {
+  display: flex;
+}
+
+.jc-c {
+  justify-content: center;
+}
+
+.jc-sb {
+  justify-content: space-between;
+}
+
+.jc-se {
+  justify-content: space-evenly;
+}
+
+.fd-c {
+  flex-direction: column;
+}
+
+.ai-c {
+  align-items: center;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.danger {
+  color: #f44336;
+}
+
+.c-p {
+  cursor: pointer;
+}
+
+.pos-rel {
+  position: relative;
+}
+
+.ta-right {
+  text-align: right;
+}
+
+.mb--16 {
+  margin-bottom: 16px;
+}
+
+.primary-color {
+  color: #673ab7;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+  color: black !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: black !important;
+}
+
+.padding-16 {
+  padding: 16px;
+}
+
+.padding-8 {
+  padding: 8px;
+}
+
+html,
+body {
+  height: 100vh;
+  overflow-y: auto;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 12px;
+}

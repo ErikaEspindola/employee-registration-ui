@@ -1,0 +1,72 @@
+<div class="login">
+  <div class="container align-vert">
+    <div class="row">
+      <div class="col-sm-12 fx jc-c">
+        <mat-card class="width-100">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-12 fx jc-c title text-color">BEM VINDO À</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 fx jc-c sub-text">Mirante Tecnologia</div>
+              </div>
+
+              <div class="row fx jc-c">
+                <div class="col-sm-8">
+                  <form [formGroup]="form">
+                    <mat-form-field class="width-100" appearance="outline">
+                      <mat-icon matPrefix>perm_identity</mat-icon>
+                      <mat-label>Usuário</mat-label>
+                      <input matInput formControlName="user">
+                    </mat-form-field>
+                  </form>
+                </div>
+              </div>
+
+              <div class="row fx jc-c">
+                <div class="col-sm-8 fx">
+                  <mat-form-field class="width-100" appearance="outline">
+                    <mat-icon matPrefix>lock</mat-icon>
+                    <mat-label>Senha</mat-label>
+                    <input type="password" matInput (keydown.enter)="login()">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row fx jc-c">
+                <div class="col-sm-8">
+                  <button class="width-100" mat-raised-button color="primary"
+                    (click)="login()">Entrar</button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 fx jc-c padding-8">
+                  <p class="text-color">Esqueceu sua senha?
+                    <span class="primary-color c-p">Clique aqui!</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="row jc-se botoes">
+                <button mat-raised-button class="bg-white">
+                  <i class="fa fa-facebook fa-2 fb-color" aria-hidden="true"></i>
+                  <span>Acessar com Facebook</span>
+                </button>
+                <button mat-raised-button class="bg-white">
+                  <i class="fa fa-google fa-2 google-color" aria-hidden="true"></i>
+                  <span>Acessar com Google</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="col-sm-6 background fx jc-c ai-c">
+              <img src="../../../assets/img/logo2.png" alt="">
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

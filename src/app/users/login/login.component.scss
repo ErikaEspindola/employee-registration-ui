@@ -1,0 +1,69 @@
+.login {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f4f4f4;
+  
+  .background {
+    height: 452px;
+    background: linear-gradient(rgba(0, 255, 255, 0.71), rgba(103, 58, 183, 0.71)),
+      url("../../../assets/img/bg.jpg") center center no-repeat;
+    background-size: cover;
+  }
+
+  mat-card {
+    padding: 0px 16px;
+  }
+
+  img {
+    height: 8rem;
+  }
+
+  .bg-white {
+    background-color: white;
+  }
+
+  .fb-color {
+    color: #4267b2;
+    padding: 0 8px 0 0;
+  }
+
+  .google-color {
+    color: #ea4335;
+    padding: 0 8px 0 0;
+  }
+
+  .fa-2 {
+    font-size: 2em;
+  }
+
+  .align-vert {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .sub-text {
+    font-size: 32px;
+    padding: 16px 0;
+    text-transform: uppercase;
+    background: -webkit-linear-gradient(rgba(0, 192, 192, 0.71), rgba(103, 58, 183, 0.71));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title {
+    text-transform: uppercase;
+    margin-top: 40px;
+  }
+
+  .text-color {
+    color: gray;
+  }
+
+  .botoes {
+    padding: 20px 0;
+  }
+}
