@@ -7,10 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './users/login/login.component';
 import { MaterialModule } from './material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatCardActions } from '@angular/material/card';
 import { ListComponent } from './employees/list/list.component';
 import { HeaderComponent } from './employees/header/header.component';
-import { DetailComponent } from './detail/detail.component';
+import { DetailComponent } from './employees/detail/detail.component';
 
 @NgModule({
   declarations: [
