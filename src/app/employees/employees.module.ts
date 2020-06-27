@@ -1,3 +1,5 @@
+import { MatSelectModule } from '@angular/material/select';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -9,9 +11,11 @@ import { ListComponent } from './list/list.component';
 import { MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from './header/header.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AddComponent } from './add/add.component';
+import { DetailComponent } from './detail/detail.component';
 
 @NgModule({
-  declarations: [ListComponent, HeaderComponent],
+  declarations: [ListComponent, HeaderComponent, DetailComponent, AddComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -20,7 +24,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule,
     MatAutocompleteModule,
     MatRippleModule,
-    MatChipsModule
+    MatChipsModule,
+    NgxDropzoneModule,
+    MatSelectModule
   ]
 })
 export class EmployeesModule { }

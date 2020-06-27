@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     this.form = this.formBuilder.group({
       user: ['', Validators.required],
       password: ['', Validators.required]
@@ -25,8 +24,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    
     this.router.navigate(['/list-employees']);
   }
-
 }

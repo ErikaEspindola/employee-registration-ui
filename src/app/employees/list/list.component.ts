@@ -108,4 +108,8 @@ export class ListComponent implements OnInit {
   detail(id: number) {
     this.router.navigate(['/detail-employees'], { queryParams: { id } });
   }
+
+  addEmployee() {
+    this.router.navigate(['/add-employee']);
+  }
 }

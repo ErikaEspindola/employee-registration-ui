@@ -10,6 +10,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ListComponent } from './employees/list/list.component';
 import { HeaderComponent } from './employees/header/header.component';
 import { DetailComponent } from './employees/detail/detail.component';
+import { AddComponent } from './employees/add/add.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { DetailComponent } from './employees/detail/detail.component';
     LoginComponent,
     ListComponent,
     HeaderComponent,
-    DetailComponent
+    DetailComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { DetailComponent } from './employees/detail/detail.component';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDropzoneModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,182 @@
+<div class="bg">
+  <app-header title="Incluir colaborador"></app-header>
+
+  <div class="container">
+    <div class="save-btn">
+      <button mat-raised-button color="primary">
+        <mat-icon>save</mat-icon>
+        SALVAR
+      </button>
+    </div>
+
+    <mat-card class="profile-card">
+      <div class="profile-pic">
+        <img *ngIf="uploadFiles.length > 0" (click)="uploadFiles.pop()"
+          src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+
+        <ngx-dropzone *ngIf="uploadFiles.length === 0" class="custom-dropzone fx jc-c" (change)="onFilesAdded($event)"
+          [multiple]="false">
+          <ngx-dropzone-label>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <p>Escolher foto</p>
+          </ngx-dropzone-label>
+        </ngx-dropzone>
+      </div>
+
+      <div class="profile-description">
+        <div>
+          <form [formGroup]="form">
+            <mat-form-field>
+              <mat-label>Nome</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+          </form>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Cargo</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let food of foods" [value]="food.value">
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>
+              <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+              Time
+            </mat-label>
+            <mat-select>
+              <mat-option *ngFor="let food of foods" [value]="food.value">
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="experience-card mg-top-16">
+      <div class="title">
+        <h2>Experiências profissionais</h2>
+        <button mat-icon-button color="primary" matTooltip="Adicionar" (click)="addExperience()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <mat-card class="experience mg-top-16" *ngFor="let item of experienceList">
+        <div class="experience-pic">
+          <img *ngIf="uploadFiles2.length > 0" (click)="uploadFiles.pop()"
+            src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+
+          <ngx-dropzone *ngIf="uploadFiles2.length === 0" class="custom-dropzone fx jc-c"
+            (change)="onFilesAdded2($event)" [multiple]="false">
+            <ngx-dropzone-label>
+              <mat-icon>insert_photo</mat-icon>
+            </ngx-dropzone-label>
+          </ngx-dropzone>
+        </div>
+
+        <div class="experience-description">
+          <mat-form-field appearance="outline">
+            <mat-label>Descreva suas experiências</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+      <div class="chip-div mg-top-16">
+        <mat-form-field class="chip-list">
+          <mat-chip-list #chipList aria-label="Competências">
+            <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(fruit)">
+              {{fruit.name}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+
+            <input placeholder="Competências" [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+    </mat-card>
+
+    <mat-card class="mg-top-16">
+      <h2>Informações de contato</h2>
+      <div class="row contact mg-top-16">
+        <form class="col-sm-12" [formGroup]="contact">
+          <mat-form-field>
+            <mat-label>
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              Telefone fixo
+            </mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>
+              <i class="fa fa-mobile" aria-hidden="true"></i>
+              Telefone celular
+            </mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>
+              <i class="fa fa-building" aria-hidden="true"></i>
+              Telefone trabalho
+            </mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+        </form>
+      </div>
+
+      <div class="row contact mg-top-16">
+        <form class="col-sm-12" [formGroup]="contact">
+          <mat-form-field>
+            <mat-label>
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              E-mail
+            </mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+              Facebook
+            </mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+              Linkedin
+            </mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+        </form>
+      </div>
+
+      <div class="fx jc-c address">
+        <form [formGroup]="contact" class="width-100">
+          <mat-form-field class="width-100">
+            <mat-label>
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              Endereço
+            </mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+  <mat-toolbar color="primary" class="mg-top-16">
+  </mat-toolbar>
+</div>
