@@ -1,0 +1,60 @@
+<div class="bg">
+    <app-header title="Consulta de colaboradores"></app-header>
+
+    <div class="container">
+        <mat-card class="profile-card">
+            <div class="profile-pic">
+                <img src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+            </div>
+            <div class="profile-description">
+                <div>
+                    <div class="title">
+                        <div>Érika Espindola</div>
+                        <div>
+                            <button mat-button>
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                EDITAR
+                            </button>
+                            <button mat-button>
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                EXCLUIR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="subtitle">Desenvolvedor</div>
+                <div class="subtitle">
+                    <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                    <span>Squad inovação</span>
+                </div>
+            </div>
+        </mat-card>
+
+        <mat-card class="experience-card">
+            <h2>Experiências profissionais</h2>
+
+            <mat-card></mat-card>
+            <mat-card></mat-card>
+
+            <div class="chip-div">
+                <mat-chip-list aria-label="Seleção de filtro">
+                    <mat-chip *ngFor="let item of experienceChips">{{item}}</mat-chip>
+                </mat-chip-list>
+            </div>
+
+            <div class="contact">
+                <div *ngFor="let item of contactList">
+                    <i class="fa fa-{{item.icon}}" aria-hidden="true"></i>
+                    <span>{{item.text}}</span>
+                </div>
+            </div>
+
+            <div class="fx jc-c address">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                    SEPN 511 Bloco B Edifício Bittar III, 4º andar Asa Norte, Brasília, DF
+                </span>
+            </div>
+        </mat-card>
+    </div>
+</div>

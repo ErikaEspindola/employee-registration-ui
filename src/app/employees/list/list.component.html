@@ -1,5 +1,5 @@
 <div class="bg">
-  <app-header></app-header>
+  <app-header title="Colaboradores"></app-header>
 
   <div class="container">
     <div class="row form-margin">
@@ -36,7 +36,7 @@
 
     <div class="list">
       <div class="col-sm-4" *ngFor="let item of list">
-        <mat-card class="example-card list-card" matRipple>
+        <mat-card class="example-card list-card" matRipple (click)="detail(item.id)">
           <mat-card-header>
             <img mat-card-avatar src={{item.picture}} class="example-header-image">
             <mat-card-title>{{item.name}}</mat-card-title>
