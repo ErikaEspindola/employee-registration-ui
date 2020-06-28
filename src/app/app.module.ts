@@ -12,6 +12,7 @@ import { HeaderComponent } from './employees/header/header.component';
 import { DetailComponent } from './employees/detail/detail.component';
 import { AddComponent } from './employees/add/add.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
