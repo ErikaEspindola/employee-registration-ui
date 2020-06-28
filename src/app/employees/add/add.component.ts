@@ -37,6 +37,12 @@ export class AddComponent implements OnInit {
     'Gerente',
   ];
 
+  teamList = [
+    'Squad Inovação',
+    'Squad Engenharia',
+    'Squad IA'
+  ];
+
   visible = true;
   selectable = true;
   removable = true;
@@ -150,13 +156,13 @@ export class AddComponent implements OnInit {
 
   mountRequest() {
     return {
-      id: 3,
+      id: 5,
       name: this.form.value.name,
       charge: this.form.value.charge,
       team: this.form.value.team,
       profilePicture: this.profilePic.changingThisBreaksApplicationSecurity,
       professionalExperience: this.mountProfessionalExperience(),
-      skills: this.skills,
+      skills: this.skills.map(skill => skill.name),
       contact: {
         phone: this.contact.value.phone,
         cellPhone: this.contact.value.cellPhone,
