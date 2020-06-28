@@ -38,11 +38,11 @@
       <div class="col-sm-4" *ngFor="let item of list">
         <mat-card class="example-card list-card" matRipple (click)="detail(item.id)">
           <mat-card-header>
-            <img mat-card-avatar src={{item.picture}} class="example-header-image">
+            <img mat-card-avatar [src]="item.profilePicture" class="example-header-image">
             <mat-card-title>{{item.name}}</mat-card-title>
             <mat-card-subtitle>{{item.charge}}</mat-card-subtitle>
             <mat-card-subtitle>
-              <i class="{{item.icon}}" aria-hidden="true"></i>
+              <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
               <span>{{item.team}}</span>
             </mat-card-subtitle>
           </mat-card-header>
