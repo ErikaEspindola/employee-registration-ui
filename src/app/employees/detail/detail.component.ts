@@ -1,5 +1,8 @@
+import { ContactList, EmployeeDetail } from './../entities';
+import { EmployeesService } from './../employees.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detail',
@@ -9,44 +12,63 @@ import { ActivatedRoute } from '@angular/router';
 export class DetailComponent implements OnInit {
 
   id: number;
-  experienceChips = [
-    'UX', 'HTML5', 'CSS', 'Web Design', 'PHP', 'Java', 'AngularJS', 'jQuery', 'Kotlin',
-    'Swift', 'JEE', 'Angular', 'React Native', 'Spring Cloud'
-  ];
+  employeeDetails: EmployeeDetail;
 
-  contactList = [
+  contactList: ContactList[] = [
     {
       icon: 'phone',
-      text: '(61) 5555-5555'
+      text: ''
     },
     {
       icon: 'mobile',
-      text: '(61) 5555-5555'
+      text: ''
     },
     {
       icon: 'building',
-      text: '(61) 5555-5555'
+      text: ''
     },
     {
       icon: 'envelope-o',
-      text: 'brendan@gmail.com'
+      text: ''
     },
     {
       icon: 'facebook',
-      text: 'facebook.com/brendan'
+      text: ''
     },
     {
       icon: 'linkedin',
-      text: 'linkedin/brendan'
+      text: ''
     }
   ];
 
-  experienceList = [1, 2];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private service: EmployeesService,
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit() {
     this.id = this.route.queryParams['_value'].id;
+
+    this.service.getEmployee(this.id)
+      .subscribe((res: EmployeeDetail) => {
+        this.employeeDetails = res;
+        this.employeeDetails.profilePicture = this.sanitizer.bypassSecurityTrustResourceUrl(this.employeeDetails.profilePicture.toString());
+        this.employeeDetails.professionalExperience.forEach(exp => {
+          exp.experienceImage = this.sanitizer.bypassSecurityTrustResourceUrl(exp.experienceImage.toString());
+        });
+
+        this.defineContacts();
+      });
   }
 
+  defineContacts() {
+    let contact: string[] = Object.values(this.employeeDetails.contact);
+    contact.pop();
+
+    contact.forEach((ct, i) => {
+      this.contactList[i].text = ct;
+    });
+  }
 }

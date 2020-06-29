@@ -1,9 +1,13 @@
+import { startWith, map } from 'rxjs/operators';
 import { EmployeesService } from './../employees.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add',
@@ -11,6 +15,28 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
+
+  listLength: number;
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  skillControl = new FormControl();
+  filteredSkills: Observable<string[]>;
+  skills: string[] = [];
+  allskills: string[] = ['HTML', 'CSS', 'Javascript', 'Angular', 'Java', 'Spring Boot', 'MongoDB'];
+
+  @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
+  filteredTeams: Observable<string[]>;
+  teamsControl = new FormControl();
+
+  filteredCharges: Observable<string[]>;
+  chargeControl = new FormControl();
+
+  nameControl = new FormControl();
 
   uploadFiles: File[] = [];
   experienceList = [
@@ -21,9 +47,7 @@ export class AddComponent implements OnInit {
     }
   ];
 
-  form: FormGroup;
   contact: FormGroup;
-  experienceForm: FormGroup;
   selectedCharge: string;
   profilePic;
 
@@ -43,21 +67,30 @@ export class AddComponent implements OnInit {
     'Squad IA'
   ];
 
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  skills = [];
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private sanitizer: DomSanitizer,
+    private service: EmployeesService
+  ) {
+    this.filteredSkills = this.skillControl.valueChanges.pipe(
+      startWith(null),
+      map((skill: string | null) => skill ? this._filter(skill, this.allskills) : this.allskills.slice()));
 
-  constructor(private formBuilder: FormBuilder, private sanitizer: DomSanitizer, private service: EmployeesService) { }
+    this.filteredTeams = this.teamsControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value, this.teamList))
+    );
+
+    this.filteredCharges = this.chargeControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value, this.chargeList))
+    );
+  }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      name: [''],
-      charge: [''],
-      team: ['']
-    });
+    this.listLength = this.route.queryParams['_value'].l;
+    console.log(this.listLength);
 
     this.contact = this.formBuilder.group({
       phone: [''],
@@ -68,10 +101,11 @@ export class AddComponent implements OnInit {
       linkedin: [''],
       address: ['']
     });
+  }
 
-    this.experienceForm = this.formBuilder.group({
-      skills: ['']
-    });
+  private _filter(value: string, array): string[] {
+    const filterValue = value.toLowerCase();
+    return array.filter(skill => skill.toLowerCase().indexOf(filterValue) === 0);
   }
 
   getBase64 = async (file, state, i) => {
@@ -86,21 +120,17 @@ export class AddComponent implements OnInit {
     };
   }
 
-
   async onFilesAdded(files: any) {
-
     this.uploadFiles = files.addedFiles;
     await this.getBase64(new Blob(this.uploadFiles), 1, 0);
   }
 
   async onFilesAdded2(files: any, i: number) {
-
     this.experienceList[i].uploadFiles = files.addedFiles;
     await this.getBase64(new Blob(this.experienceList[i].uploadFiles), 2, i);
   }
 
   onRemove(event) {
-
     this.uploadFiles.splice(this.uploadFiles.indexOf(event), 1);
   }
 
@@ -108,23 +138,29 @@ export class AddComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || '').trim()) {
-      this.skills.push({ name: value.trim() });
+      this.skills.push(value.trim());
     }
 
-    // Reset the input value
     if (input) {
       input.value = '';
     }
+
+    this.skillControl.setValue(null);
   }
 
-  remove(fruit): void {
-    const index = this.skills.indexOf(fruit);
+  remove(skill: string): void {
+    const index = this.skills.indexOf(skill);
 
     if (index >= 0) {
       this.skills.splice(index, 1);
     }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.skills.push(event.option.viewValue);
+    this.skillInput.nativeElement.value = '';
+    this.skillControl.setValue(null);
   }
 
   addExperience() {
@@ -136,13 +172,12 @@ export class AddComponent implements OnInit {
   }
 
   save() {
-    let formData = new FormData();
-    formData.append('file', this.uploadFiles[0], this.uploadFiles[0].name);
-
     let request = this.mountRequest();
 
-    this.service.addEmployees(request)
-      .subscribe((res) => console.log(res));
+    console.log(request)
+
+    // this.service.addEmployees(request)
+    //   .subscribe((res) => console.log(res));
   }
 
   mountProfessionalExperience() {
@@ -156,13 +191,13 @@ export class AddComponent implements OnInit {
 
   mountRequest() {
     return {
-      id: 5,
-      name: this.form.value.name,
-      charge: this.form.value.charge,
-      team: this.form.value.team,
+      id: this.listLength + 1,
+      name: this.nameControl.value,
+      charge: this.chargeControl.value,
+      team: this.teamsControl.value,
       profilePicture: this.profilePic.changingThisBreaksApplicationSecurity,
       professionalExperience: this.mountProfessionalExperience(),
-      skills: this.skills.map(skill => skill.name),
+      skills: this.skills,
       contact: {
         phone: this.contact.value.phone,
         cellPhone: this.contact.value.cellPhone,

@@ -1,15 +1,15 @@
 <div class="bg">
     <app-header title="Consulta de colaboradores"></app-header>
 
-    <div class="container">
+    <div class="container" *ngIf="employeeDetails">
         <mat-card class="profile-card">
             <div class="profile-pic">
-                <img src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+                <img [src]="employeeDetails.profilePicture">
             </div>
             <div class="profile-description">
                 <div>
                     <div class="title">
-                        <div>Érika Espindola</div>
+                        <div>{{employeeDetails.name}}</div>
                         <div>
                             <button mat-button>
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -22,10 +22,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="subtitle">Desenvolvedor</div>
+                <div class="subtitle">{{employeeDetails.charge}}</div>
                 <div class="subtitle">
                     <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
-                    <span>Squad inovação</span>
+                    <span>{{employeeDetails.team}}</span>
                 </div>
             </div>
         </mat-card>
@@ -33,38 +33,33 @@
         <mat-card class="experience-card mg-top-16">
             <h2>Experiências profissionais</h2>
 
-            <mat-card class="experience mg-top-16" *ngFor="let item of experienceList">
+            <mat-card class="experience mg-top-16" *ngFor="let item of employeeDetails.professionalExperience">
                 <div class="experience-pic">
-                    <img src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+                    <img [src]="item.experienceImage">
                 </div>
                 <div class="experience-description mg-top-16">
-                    <div class="title">Desenvolvedor Sênior</div>
-                    <div class="subtitle">Atividades:</div>
-                    <div class="subtitle">Tecnologias:</div>
+                    <div class="subtitle">{{item.description}}</div>
                 </div>
             </mat-card>
 
             <div class="chip-div mg-top-16">
                 <mat-chip-list aria-label="Seleção de filtro">
-                    <mat-chip *ngFor="let item of experienceChips">{{item}}</mat-chip>
+                    <mat-chip *ngFor="let item of employeeDetails.skills">{{item}}</mat-chip>
                 </mat-chip-list>
             </div>
 
             <div class="contact mg-top-16">
-                <div *ngFor="let item of contactList" class="mg-top-16">
+                <div *ngFor="let item of contactList; let i=index" class="mg-top-16">
                     <i class="fa fa-{{item.icon}}" aria-hidden="true"></i>
-                    <span>{{item.text}}</span>
+                    <span *ngIf="i < 3">{{item.text | mask: '(00) 0000-0000'}}</span>
+                    <span *ngIf="i >= 3">{{item.text}}</span>
                 </div>
             </div>
 
             <div class="fx jc-c address">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>
-                    SEPN 511 Bloco B Edifício Bittar III, 4º andar Asa Norte, Brasília, DF
-                </span>
+                <span>{{employeeDetails.contact.address}}</span>
             </div>
         </mat-card>
     </div>
-    <mat-toolbar color="primary" class="mg-top-16">
-    </mat-toolbar>
 </div>

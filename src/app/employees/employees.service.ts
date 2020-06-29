@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,5 +15,9 @@ export class EmployeesService {
 
   listEmployees() {
     return this.httpClient.get(environment.url + 'listEmployees');
+  }
+
+  getEmployee(id: number) {
+    return this.httpClient.get(environment.url + 'getEmployee/' + id);
   }
 }

@@ -2,13 +2,6 @@
   <app-header title="Incluir colaborador"></app-header>
 
   <div class="container">
-    <div class="save-btn">
-      <button mat-raised-button color="primary" (click)="save()">
-        <mat-icon>save</mat-icon>
-        SALVAR
-      </button>
-    </div>
-
     <mat-card class="profile-card">
       <div class="profile-pic">
         <img *ngIf="uploadFiles.length > 0" (click)="uploadFiles.pop()" [src]="profilePic">
@@ -24,41 +17,32 @@
 
       <div class="profile-description">
         <div>
-          <form [formGroup]="form">
-            <mat-form-field>
-              <mat-label>Nome</mat-label>
-              <input matInput formControlName="name">
-            </mat-form-field>
-          </form>
+          <mat-form-field>
+            <mat-label>Nome</mat-label>
+            <input matInput [formControl]="nameControl">
+          </mat-form-field>
         </div>
 
         <div>
-          <form [formGroup]="form">
-            <mat-form-field>
-              <mat-label>Cargo</mat-label>
-              <mat-select formControlName="charge">
-                <mat-option *ngFor="let charge of chargeList" [value]="charge">
-                  {{charge}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </form>
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Cargo" matInput [formControl]="chargeControl" [matAutocomplete]="charge">
+            <mat-autocomplete #charge="matAutocomplete">
+              <mat-option *ngFor="let charge of filteredCharges | async" [value]="charge">
+                {{charge}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
         </div>
 
         <div>
-          <form [formGroup]="form">
-            <mat-form-field>
-              <mat-label>
-                <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
-                Time
-              </mat-label>
-              <mat-select formControlName="team">
-                <mat-option *ngFor="let team of teamList" [value]="team">
-                  {{team}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </form>
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Time" matInput [formControl]="teamsControl" [matAutocomplete]="team">
+            <mat-autocomplete #team="matAutocomplete">
+              <mat-option *ngFor="let team of filteredTeams | async" [value]="team">
+                {{team}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
         </div>
       </div>
     </mat-card>
@@ -71,7 +55,7 @@
         </button>
       </div>
 
-      <mat-card class="experience mg-top-16" *ngFor="let item of experienceList; let i = index">
+      <mat-card class="experience mg-top-16" *ngFor="let item of experienceList; let i=index">
         <div class="experience-pic">
           <img *ngIf="item.uploadFiles.length > 0" (click)="item.uploadFiles.pop()" [src]="item.picture">
 
@@ -93,17 +77,23 @@
 
       <div class="chip-div mg-top-16">
         <mat-form-field class="chip-list">
-          <mat-chip-list #chipList aria-label="Competências">
+          <mat-chip-list #chipList aria-label="Seleção de competências">
             <mat-chip *ngFor="let skill of skills" [selectable]="selectable" [removable]="removable"
               (removed)="remove(skill)">
-              {{skill.name}}
+              {{skill}}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
 
-            <input placeholder="Competências" [matChipInputFor]="chipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            <input placeholder="Competências" #skillInput [formControl]="skillControl" [matAutocomplete]="auto"
+              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
               (matChipInputTokenEnd)="add($event)">
           </mat-chip-list>
+
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+              {{skill}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </mat-card>
@@ -117,7 +107,7 @@
               <i class="fa fa-phone" aria-hidden="true"></i>
               Telefone fixo
             </mat-label>
-            <input matInput formControlName="phone">
+            <input matInput mask="(00) 0000-0000" formControlName="phone">
           </mat-form-field>
 
           <mat-form-field>
@@ -125,7 +115,7 @@
               <i class="fa fa-mobile" aria-hidden="true"></i>
               Telefone celular
             </mat-label>
-            <input matInput formControlName="cellPhone">
+            <input matInput mask="(00) 0000-0000" formControlName="cellPhone">
           </mat-form-field>
 
           <mat-form-field>
@@ -133,7 +123,7 @@
               <i class="fa fa-building" aria-hidden="true"></i>
               Telefone trabalho
             </mat-label>
-            <input matInput formControlName="workPhone">
+            <input matInput mask="(00) 0000-0000" formControlName="workPhone">
           </mat-form-field>
         </form>
       </div>
@@ -178,7 +168,15 @@
         </form>
       </div>
     </mat-card>
+
+    <div class="save-btn">
+      <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon>save</mat-icon>
+        SALVAR
+      </button>
+    </div>
   </div>
+
   <mat-toolbar color="primary" class="mg-top-16">
   </mat-toolbar>
 </div>

@@ -26,7 +26,8 @@ import { DetailComponent } from './detail/detail.component';
     MatRippleModule,
     MatChipsModule,
     NgxDropzoneModule,
-    MatSelectModule
+    MatSelectModule,
+    MatAutocompleteModule
   ]
 })
 export class EmployeesModule { }
