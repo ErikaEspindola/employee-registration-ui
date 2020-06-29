@@ -1,8 +1,10 @@
-import { ContactList, EmployeeDetail } from './../entities';
-import { EmployeesService } from './../employees.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import Constants from '../constants';
+import { EmployeesService } from './../employees.service';
+import { ContactList, EmployeeDetail } from './../entities';
 
 @Component({
   selector: 'app-detail',
@@ -13,34 +15,7 @@ export class DetailComponent implements OnInit {
 
   id: number;
   employeeDetails: EmployeeDetail;
-
-  contactList: ContactList[] = [
-    {
-      icon: 'phone',
-      text: ''
-    },
-    {
-      icon: 'mobile',
-      text: ''
-    },
-    {
-      icon: 'building',
-      text: ''
-    },
-    {
-      icon: 'envelope-o',
-      text: ''
-    },
-    {
-      icon: 'facebook',
-      text: ''
-    },
-    {
-      icon: 'linkedin',
-      text: ''
-    }
-  ];
-
+  contactList: ContactList[] = Constants.contactList;
 
   constructor(
     private route: ActivatedRoute,

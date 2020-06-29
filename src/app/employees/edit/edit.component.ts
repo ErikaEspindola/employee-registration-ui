@@ -2,16 +2,17 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
-import { EmployeesService } from '../employees.service';
-import { EmployeeDetail } from '../entities';
+import Constants from '../constants';
 import { Location } from '@angular/common';
+import { EmployeeDetail } from '../entities';
+import { EmployeesService } from '../employees.service';
 
 @Component({
   selector: 'app-edit',
@@ -20,16 +21,12 @@ import { Location } from '@angular/common';
 })
 export class EditComponent implements OnInit {
 
-  // Auxiliar
-
   id: number;
   profilePic;
   skills: string[] = [];
   uploadFiles: File[] = [];
   employeeDetail: EmployeeDetail;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-
-  // Control
 
   visible: boolean = true;
   removable: boolean = true;
@@ -59,38 +56,15 @@ export class EditComponent implements OnInit {
     }
   ];
 
-  allskills: string[] = [
-    'HTML',
-    'CSS',
-    'Javascript',
-    'Angular',
-    'Java',
-    'Spring Boot',
-    'MongoDB'
-  ];
-
-  chargeList = [
-    'Assessor',
-    'CEO',
-    'Cientista de dados',
-    'Desenvolvedor',
-    'Engenheiro de Software',
-    'Estagiário',
-    'Gerente',
-  ];
-
-  teamList = [
-    'Squad Inovação',
-    'Squad Engenharia',
-    'Squad IA'
-  ];
+  teamList: string[] = Constants.teamList;
+  allskills: string[] = Constants.skillsList;
+  chargeList: string[] = Constants.chargeList;
 
   @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
     private service: EmployeesService,

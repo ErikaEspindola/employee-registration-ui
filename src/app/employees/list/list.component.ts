@@ -3,9 +3,9 @@ import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import Constants from '../constants';
 import { EmployeeDetail } from '../entities';
 import { EmployeesService } from './../employees.service';
-import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -14,19 +14,16 @@ import { VirtualTimeScheduler } from 'rxjs';
 })
 export class ListComponent implements OnInit {
 
+  chips = Constants.chips;
+  filter = new FormControl();
   list: EmployeeDetail[] = [];
   filteredList: EmployeeDetail[] = [];
 
-  filter = new FormControl();
-
-  chips = [
-    { name: 'Nome', state: false },
-    { name: 'Cargo', state: false },
-    { name: 'Competências', state: false },
-    { name: 'Time', state: false }
-  ];
-
-  constructor(private router: Router, private service: EmployeesService, private sanitizer: DomSanitizer) { }
+  constructor(
+    private router: Router,
+    private service: EmployeesService,
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit() {
     this.listEmployees();

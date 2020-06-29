@@ -1,13 +1,16 @@
-import { startWith, map } from 'rxjs/operators';
-import { EmployeesService } from './../employees.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+
+import { Router } from '@angular/router';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+
+import Constants from '../constants';
+import { EmployeesService } from './../employees.service';
 
 @Component({
   selector: 'app-add',
@@ -16,29 +19,37 @@ import { Observable } from 'rxjs';
 })
 export class AddComponent implements OnInit {
 
-  listLength: string;
-
+  selectedCharge: string;
+  profilePic;
+  
   visible = true;
   selectable = true;
   removable = true;
+
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  skillControl = new FormControl();
+
+  //Form
+
   filteredSkills: Observable<string[]>;
-  skills: string[] = [];
-  allskills: string[] = ['HTML', 'CSS', 'Javascript', 'Angular', 'Java', 'Spring Boot', 'MongoDB'];
-
-  @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
-
+  skillControl = new FormControl();
+  
   filteredTeams: Observable<string[]>;
   teamsControl = new FormControl();
-
+  
   filteredCharges: Observable<string[]>;
   chargeControl = new FormControl();
-
+  
   nameControl = new FormControl();
+  contact: FormGroup;
 
+  // Lists
+  
+  skills: string[] = [];
   uploadFiles: File[] = [];
+  teamList: string[] = Constants.teamList;
+  allskills: string[] = Constants.skillsList;
+  chargeList: string[] = Constants.chargeList;
+  
   experienceList = [
     {
       uploadFiles: [],
@@ -47,29 +58,11 @@ export class AddComponent implements OnInit {
     }
   ];
 
-  contact: FormGroup;
-  selectedCharge: string;
-  profilePic;
-
-  chargeList = [
-    'Assessor',
-    'CEO',
-    'Cientista de dados',
-    'Desenvolvedor',
-    'Engenheiro de Software',
-    'Estagiário',
-    'Gerente',
-  ];
-
-  teamList = [
-    'Squad Inovação',
-    'Squad Engenharia',
-    'Squad IA'
-  ];
+  @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
     private service: EmployeesService
@@ -90,9 +83,6 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listLength = this.route.queryParams['_value'].l;
-    console.log(this.listLength);
-
     this.contact = this.formBuilder.group({
       phone: [''],
       cellPhone: [''],
