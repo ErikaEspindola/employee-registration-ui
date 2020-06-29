@@ -43,8 +43,8 @@
       </div>
     </div>
 
-    <div class="fx jc-c show-more">
-      <button mat-fab color="primary" matTooltip="Mostrar mais" aria-label="Mostrar mais">
+    <div class="fx jc-c show-more" *ngIf="filteredList.length < list.length && !filter.value">
+      <button mat-fab color="primary" matTooltip="Mostrar mais" aria-label="Mostrar mais" (click)="paginate()">
         <mat-icon>add</mat-icon>
       </button>
     </div>

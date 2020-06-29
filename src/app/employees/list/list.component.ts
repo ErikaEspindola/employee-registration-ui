@@ -46,7 +46,7 @@ export class ListComponent implements OnInit {
         employee.skills = employee.skills.map(skill => skill.toLowerCase())
       });
 
-      this.filteredList = this.list;
+      this.filteredList = this.list.slice(0, 9);
     });
   }
 
@@ -56,7 +56,7 @@ export class ListComponent implements OnInit {
   }
 
   filterList() {
-    this.filteredList = this.list;
+    this.filteredList = this.list.slice(0, 9);
 
     if (this.chips.some(chip => chip.state)) {
       this.chips.forEach((chip, i) => {
@@ -97,5 +97,9 @@ export class ListComponent implements OnInit {
         );
         break;
     }
+  }
+
+  paginate() {
+    this.filteredList = this.filteredList.concat(this.list.slice((this.filteredList.length), this.filteredList.length + 9));
   }
 }
