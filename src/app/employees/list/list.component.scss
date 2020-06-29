@@ -30,10 +30,15 @@
     flex-wrap: wrap;
 
     .list-card {
-      flex: 1 0 21%; /* explanation below */
+      flex: 1 0 21%;
       margin: 16px;
+
       .example-header-image {
         background-size: cover;
+      }
+
+      .mat-card-subtitle {
+        margin-bottom: 8px;
       }
 
       .mat-card-avatar {
