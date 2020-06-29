@@ -1,7 +1,7 @@
 import { ContactList, EmployeeDetail } from './../entities';
 import { EmployeesService } from './../employees.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -45,7 +45,8 @@ export class DetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: EmployeesService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -70,5 +71,9 @@ export class DetailComponent implements OnInit {
     contact.forEach((ct, i) => {
       this.contactList[i].text = ct;
     });
+  }
+
+  editEmployee() {
+    this.router.navigate(['/edit-employee'], { queryParams: { id: this.id } });
   }
 }

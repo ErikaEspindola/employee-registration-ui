@@ -13,9 +13,10 @@ import { HeaderComponent } from './header/header.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddComponent } from './add/add.component';
 import { DetailComponent } from './detail/detail.component';
+import { EditComponent } from './edit/edit.component';
 
 @NgModule({
-  declarations: [ListComponent, HeaderComponent, DetailComponent, AddComponent],
+  declarations: [ListComponent, HeaderComponent, DetailComponent, AddComponent, EditComponent],
   imports: [
     CommonModule,
     MatCardModule,

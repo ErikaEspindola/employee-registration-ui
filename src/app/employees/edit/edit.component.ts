@@ -1,34 +1,44 @@
-import { startWith, map } from 'rxjs/operators';
-import { EmployeesService } from './../employees.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+
+import { EmployeesService } from '../employees.service';
+import { EmployeeDetail } from '../entities';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
-export class AddComponent implements OnInit {
+export class EditComponent implements OnInit {
 
-  listLength: string;
+  // Auxiliar
 
-  visible = true;
-  selectable = true;
-  removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  skillControl = new FormControl();
-  filteredSkills: Observable<string[]>;
+  id: number;
+  profilePic;
   skills: string[] = [];
-  allskills: string[] = ['HTML', 'CSS', 'Javascript', 'Angular', 'Java', 'Spring Boot', 'MongoDB'];
+  uploadFiles: File[] = [];
+  employeeDetail: EmployeeDetail;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  // Control
+
+  visible: boolean = true;
+  removable: boolean = true;
+  selectable: boolean = true;
+
+  //Form
+
+  filteredSkills: Observable<string[]>;
+  skillControl = new FormControl();
 
   filteredTeams: Observable<string[]>;
   teamsControl = new FormControl();
@@ -37,19 +47,27 @@ export class AddComponent implements OnInit {
   chargeControl = new FormControl();
 
   nameControl = new FormControl();
+  contact: FormGroup;
 
-  uploadFiles: File[] = [];
+  // Lists
+
   experienceList = [
     {
       uploadFiles: [],
       picture: undefined,
-      description: new FormControl()
+      description: ''
     }
   ];
 
-  contact: FormGroup;
-  selectedCharge: string;
-  profilePic;
+  allskills: string[] = [
+    'HTML',
+    'CSS',
+    'Javascript',
+    'Angular',
+    'Java',
+    'Spring Boot',
+    'MongoDB'
+  ];
 
   chargeList = [
     'Assessor',
@@ -67,13 +85,19 @@ export class AddComponent implements OnInit {
     'Squad IA'
   ];
 
+  @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
-    private service: EmployeesService
+    private service: EmployeesService,
+    private location: Location
   ) {
+    this.id = this.route.queryParams['_value'].id;
+
     this.filteredSkills = this.skillControl.valueChanges.pipe(
       startWith(null),
       map((skill: string | null) => skill ? this._filter(skill, this.allskills) : this.allskills.slice()));
@@ -90,9 +114,6 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listLength = this.route.queryParams['_value'].l;
-    console.log(this.listLength);
-
     this.contact = this.formBuilder.group({
       phone: [''],
       cellPhone: [''],
@@ -102,6 +123,40 @@ export class AddComponent implements OnInit {
       linkedin: [''],
       address: ['']
     });
+
+    this.service.getEmployee(this.id)
+      .subscribe((res: EmployeeDetail) => {
+        this.employeeDetail = res;
+
+        let file = new File([], null, null);
+        this.uploadFiles.push(file);
+
+        this.nameControl.setValue(res.name);
+        this.teamsControl.setValue(res.team);
+        this.chargeControl.setValue(res.charge);
+
+        this.profilePic = this.sanitizer.bypassSecurityTrustResourceUrl(res.profilePicture.toString());
+
+        this.experienceList = res.professionalExperience.map(exp => {
+          return {
+            picture: this.sanitizer.bypassSecurityTrustResourceUrl(exp.experienceImage.toString()),
+            description: exp.description,
+            uploadFiles: this.uploadFiles
+          }
+        });
+
+        this.contact.setValue({
+          phone: res.contact.phone,
+          cellPhone: res.contact.cellPhone,
+          workPhone: res.contact.workPhone,
+          mail: res.contact.mail,
+          facebook: res.contact.facebook,
+          linkedin: res.contact.linkedin,
+          address: res.contact.address
+        });
+
+        this.skills = res.skills;
+      });
   }
 
   private _filter(value: string, array): string[] {
@@ -168,15 +223,15 @@ export class AddComponent implements OnInit {
     this.experienceList.push({
       picture: '',
       uploadFiles: [],
-      description: new FormControl()
+      description: ''
     });
   }
 
   save() {
     let request = this.mountRequest();
 
-    this.service.addEmployees(request)
-      .subscribe(() => this.router.navigate(['/list-employees']));
+    this.service.editEmployee(request)
+      .subscribe(() => this.location.back());
   }
 
   mountProfessionalExperience() {
@@ -190,6 +245,7 @@ export class AddComponent implements OnInit {
 
   mountRequest() {
     return {
+      id: this.employeeDetail.id,
       name: this.nameControl.value,
       charge: this.chargeControl.value,
       team: this.teamsControl.value,

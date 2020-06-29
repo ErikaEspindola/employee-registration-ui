@@ -1,0 +1,157 @@
+.bg {
+  background-color: #f4f4f4;
+
+  .save-btn {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .profile-card {
+    margin-top: 16px;
+    display: flex;
+
+    .profile-pic {
+      width: 20%;
+      margin-top: 10px;
+
+      .custom-dropzone {
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        border: 1px solid #717386;
+
+        i {
+          font-size: 4.2rem;
+        }
+      }
+
+      img {
+        margin-right: 50px;
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        object-fit: cover;
+      }
+
+      img:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+    }
+
+    .profile-description {
+      width: 80%;
+
+      mat-form-field {
+        width: 80%;
+      }
+    }
+  }
+
+  .mg-top-16 {
+    margin-top: 16px;
+  }
+
+  .experience-card {
+    .title {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .experience {
+      display: flex;
+
+      .experience-pic {
+        width: 15%;
+
+        .custom-dropzone {
+          height: 100px;
+          width: 100px;
+          border-radius: 50%;
+          border: 1px solid #717386;
+
+          mat-icon {
+            font-size: 3rem;
+            display: flex;
+            justify-content: center;
+            height: auto;
+            width: auto;
+          }
+        }
+
+        img {
+          margin-right: 50px;
+          height: 100px;
+          width: 100px;
+          border-radius: 50%;
+          flex-shrink: 0;
+          object-fit: cover;
+        }
+
+        img:hover {
+          opacity: 0.5;
+          cursor: pointer;
+        }
+      }
+
+      .experience-description {
+        width: 85%;
+        margin-top: 8px;
+
+        .mat-form-field-appearance-fill .mat-form-field-flex {
+          background-color: #fff !important;
+        }
+        mat-form-field {
+          width: 100%;
+        }
+
+        .title {
+          font-size: 20px;
+          font-weight: 500;
+        }
+
+        .subtitle {
+          color: rgba(0, 0, 0, 0.54);
+
+          i {
+            padding-right: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .chip-div {
+    .chip-list {
+      width: 100%;
+    }
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+
+    form {
+      display: flex;
+      justify-content: space-between;
+
+      mat-form-field {
+        width: 25%;
+      }
+    }
+  }
+
+  .address {
+    margin-top: 32px;
+
+    i {
+      font-size: 1.2rem;
+      margin-right: 8px;
+    }
+    span {
+      font-weight: 500;
+    }
+  }
+}

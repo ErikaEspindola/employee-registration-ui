@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,6 +11,10 @@ export class EmployeesService {
 
   addEmployees(request) {
     return this.httpClient.post(environment.url + 'addEmployee', request)
+  }
+
+  editEmployee(request) {
+    return this.httpClient.post(environment.url + 'editEmployee', request)
   }
 
   listEmployees() {

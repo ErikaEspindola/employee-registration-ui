@@ -50,6 +50,6 @@ export class ListComponent implements OnInit {
   }
 
   addEmployee() {
-    this.router.navigate(['/add-employee'], { queryParams: { l: this.list.length } });
+    this.router.navigate(['/add-employee']);
   }
 }

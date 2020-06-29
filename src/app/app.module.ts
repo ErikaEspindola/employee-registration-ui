@@ -1,3 +1,4 @@
+import { EditComponent } from './employees/edit/edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -22,7 +23,8 @@ import { NgxMaskModule } from 'ngx-mask'
     ListComponent,
     HeaderComponent,
     DetailComponent,
-    AddComponent
+    AddComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
